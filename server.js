@@ -5,22 +5,46 @@ var path = require('path');
 var app = express();
 app.use(morgan('combined'));
 
-var articleOne = {
-    title : 'Article One | Kaustubh Kashyap',
-    heading : 'Article One',
-    date : 'Sep 19,2017',
-    content : `<p>
-                    Hello, This is my First Article.
-                    Hello, This is my First Article.
-                    Hello, This is my First Article.
-                    Hello, This is my First Article.
-                    Hello, This is my First Article.
-                </p>
-                <p>
-                    Hello, This is my First Article.
-                    Hello, This is my First Article.
-                    Hello, This is my First Article.
-                </p>`
+var articles = {
+    article-one : {
+        title : 'Article One | Kaustubh Kashyap',
+        heading : 'Article One',
+        date : 'Sep 19,2017',
+        content : `<p>
+                        Hello, This is my First Article.
+                        Hello, This is my First Article.
+                        Hello, This is my First Article.
+                        Hello, This is my First Article.
+                        Hello, This is my First Article.
+                    </p>
+                    <p>
+                        Hello, This is my First Article.
+                        Hello, This is my First Article.
+                        Hello, This is my First Article.
+                    </p>`
+    },
+    article-two : {
+        title : 'Article Two | Kaustubh Kashyap',
+        heading : 'Article Two',
+        date : 'Sep 18,2017',
+        content : `<p>
+                        Hello, This is my 2nd Article.
+                    </p>
+                    <p>
+                        Hello, This is my second Article.
+                    </p>`
+    },
+    article-three : {
+        title : 'Article Three | Kaustubh Kashyap',
+        heading : 'Article Three',
+        date : 'Sep 17,2017',
+        content : `<p>
+                        Hello, This is my 3rd Article.
+                    </p>
+                    <p>
+                        Hello, This is my third Article.
+                    </p>`
+    }
 };
 
 function createTemplate (data) {
@@ -62,8 +86,11 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
-app.get('/article-one', function(req,res) {
-    res.send(createTemplate(articleOne));
+app.get('/:articleName', function(req,res) {
+    //articleName == article-one
+    //articles[articleName] == content object for article one
+    var articleName=req.params.articleName;
+    res.send(createTemplate(articles[articleName]));
 });
     
 app.get('/article-two', function(req,res) {
